@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - Login</title>
+    <link rel="icon" type="image/png" href="icons/nexuslogo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+         <style>
+         @keyframes spin {
+             from { transform: rotate(0deg); }
+             to { transform: rotate(360deg); }
+         }
+         
+         @keyframes pulse {
+             0%, 100% { opacity: 1; }
+             50% { opacity: 0.5; }
+         }
+         
+         @keyframes bounce {
+             0%, 100% { transform: translateY(0); }
+             50% { transform: translateY(-25%); }
+         }
+         
+         @keyframes fade-in {
+             from { opacity: 0; transform: translateY(20px); }
+             to { opacity: 1; transform: translateY(0); }
+         }
+         
+         @keyframes float {
+             0%, 100% { transform: translateY(0px); }
+             50% { transform: translateY(-10px); }
+         }
+         
+         @keyframes glow {
+             0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+             50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+         }
+         
+         .animate-spin { animation: spin 1s linear infinite; }
+         .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+         .animate-bounce { animation: bounce 1s infinite; }
+         .animate-fade-in { animation: fade-in 0.6s ease-out; }
+         .animate-float { animation: float 3s ease-in-out infinite; }
+         .animate-glow { animation: glow 2s ease-in-out infinite; }
+         
+         .gear-slow { animation: spin 20s linear infinite; }
+         .gear-medium { animation: spin 15s linear infinite reverse; }
+         .gear-fast { animation: spin 25s linear infinite; }
+         .gear-reverse { animation: spin 18s linear infinite reverse; }
+         .gear-extra { animation: spin 22s linear infinite; }
+         
+         .delay-500 { animation-delay: 0.5s; }
+         .delay-1000 { animation-delay: 1s; }
+         .delay-1500 { animation-delay: 1.5s; }
+         
+         .backdrop-blur-xl { backdrop-filter: blur(24px); }
+         
+         .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+         .transition-colors { transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+         .transition-transform { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+         .duration-300 { transition-duration: 0.3s; }
+         .duration-500 { transition-duration: 0.5s; }
+         .duration-1000 { transition-duration: 1s; }
+         
+         .form-container {
+             transform: scale(1);
+             opacity: 1;
+             filter: blur(0);
+             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+         }
+         
+         .form-container.shrinking {
+             transform: scale(0.75);
+             opacity: 0.6;
+             filter: blur(2px);
+         }
+         
+         .form-container:hover {
+             border-color: rgba(59, 130, 246, 0.3);
+             background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+             box-shadow: 
+                 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                 0 0 0 1px rgba(59, 130, 246, 0.1),
+                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
+         }
+         
+         .transition-overlay {
+             opacity: 0;
+             pointer-events: none;
+             transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+             background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(30, 58, 138, 0.95) 100%);
+         }
+         
+         .transition-overlay.active {
+             opacity: 1;
+             pointer-events: auto;
+         }
+         
+         input {
+             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+             border: 1px solid rgba(255, 255, 255, 0.2);
+             backdrop-filter: blur(10px);
+             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+         }
+         
+         input:focus {
+             outline: none;
+             border-color: rgba(59, 130, 246, 0.5);
+             background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+             box-shadow: 
+                 0 0 0 3px rgba(59, 130, 246, 0.25),
+                 0 4px 12px rgba(59, 130, 246, 0.15);
+             transform: translateY(-1px);
+         }
+         
+         input:hover {
+             border-color: rgba(59, 130, 246, 0.4);
+             background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+         }
+         
+         .neon-hover:hover {
+             box-shadow: 
+                 0 0 20px rgba(59, 130, 246, 0.4),
+                 0 0 40px rgba(59, 130, 246, 0.2);
+             transform: translateY(-2px);
+         }
+         
+         .btn-hover:hover {
+             box-shadow: 
+                 0 0 30px rgba(59, 130, 246, 0.5),
+                 0 0 60px rgba(59, 130, 246, 0.3);
+             transform: translateY(-2px);
+         }
+         
+         .logo-container {
+             background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.1) 100%);
+             border: 1px solid rgba(59, 130, 246, 0.2);
+             backdrop-filter: blur(10px);
+             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+         }
+         
+         .logo-container:hover {
+             background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(147, 197, 253, 0.15) 100%);
+             border-color: rgba(59, 130, 246, 0.4);
+             transform: scale(1.05) translateY(-2px);
+             box-shadow: 
+                 0 20px 40px rgba(59, 130, 246, 0.3),
+                 0 0 0 1px rgba(59, 130, 246, 0.2);
+         }
+         
+         .checkbox-custom {
+             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+             border: 1px solid rgba(255, 255, 255, 0.2);
+             backdrop-filter: blur(10px);
+             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+         }
+         
+         .checkbox-custom:checked {
+             background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(59, 130, 246, 0.6) 100%);
+             border-color: rgba(59, 130, 246, 0.5);
+             box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+         }
+         
+         .particle {
+             background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+             backdrop-filter: blur(2px);
+             border-radius: 50%;
+             animation: float 4s ease-in-out infinite;
+         }
+         
+         .gear-container {
+             filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.3));
+             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+         }
+         
+         .gear-container:hover {
+             filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+             transform: scale(1.1);
+         }
+         
+         .blur-container {
+             background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+             filter: blur(60px);
+             animation: pulse 4s ease-in-out infinite;
+         }
+         
+         .blur-container:nth-child(2) {
+             background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+             animation-delay: 2s;
+         }
+         
+         .blur-container:nth-child(3) {
+             background: radial-gradient(circle, rgba(147, 197, 253, 0.15) 0%, transparent 70%);
+             animation-delay: 1s;
+         }
+     </style>
+</head>
+<body class="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
+    <!-- Transition Overlay -->
+    <div id="transitionOverlay" class="absolute inset-0 bg-gradient-to-br from-blue-600 to-slate-900 z-50 transition-overlay">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="text-center">
+                <div class="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+                <p class="text-white text-xl font-semibold">Welcome to Admin Portal</p>
+                <p class="text-white/70 text-sm mt-2">Loading your dashboard...</p>
+            </div>
+        </div>
+    </div>
+
+         <!-- Background Gears -->
+     <div class="absolute inset-0">
+         <!-- Gear 1 -->
+         <div class="absolute top-20 left-20 w-32 h-32 opacity-20 gear-container">
+             <svg class="w-full h-full gear-slow" viewBox="0 0 100 100" fill="none">
+                 <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(59, 130, 246, 0.4)" stroke-width="2" />
+                 <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(147, 197, 253, 0.3)" stroke-width="1" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(0 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(30 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(60 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(90 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(120 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(150 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(180 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(210 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(240 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(270 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(300 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(330 50 50)" />
+             </svg>
+         </div>
+
+         <!-- Gear 2 -->
+         <div class="absolute bottom-20 right-20 w-24 h-24 opacity-15 gear-container">
+             <svg class="w-full h-full gear-medium" viewBox="0 0 100 100" fill="none">
+                 <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" />
+                 <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(148, 163, 184, 0.2)" stroke-width="1" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(0 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(45 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(90 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(135 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(180 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(225 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(270 50 50)" />
+                 <line x1="50" y1="20" x2="50" y2="30" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(315 50 50)" />
+             </svg>
+         </div>
+
+         <!-- Gear 3 -->
+         <div class="absolute top-1/2 left-10 w-16 h-16 opacity-25 gear-container">
+             <svg class="w-full h-full gear-fast" viewBox="0 0 100 100" fill="none">
+                 <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(59, 130, 246, 0.4)" stroke-width="2" />
+                 <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(147, 197, 253, 0.3)" stroke-width="1" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(0 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(45 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(90 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(135 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(180 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(225 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(270 50 50)" />
+                 <line x1="50" y1="15" x2="50" y2="25" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" transform="rotate(315 50 50)" />
+             </svg>
+         </div>
+
+         <!-- Gear 4 -->
+         <div class="absolute bottom-1/3 left-1/3 w-20 h-20 opacity-20 gear-container">
+             <svg class="w-full h-full gear-reverse" viewBox="0 0 100 100" fill="none">
+                 <circle cx="50" cy="50" r="32" fill="none" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" />
+                 <circle cx="50" cy="50" r="22" fill="none" stroke="rgba(59, 130, 246, 0.2)" stroke-width="1" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(0 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(36 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(72 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(108 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(144 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(180 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(216 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(252 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(288 50 50)" />
+                 <line x1="50" y1="18" x2="50" y2="28" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2" transform="rotate(324 50 50)" />
+             </svg>
+         </div>
+
+         <!-- Gear 5 -->
+         <div class="absolute top-3/4 right-1/4 w-14 h-14 opacity-30 gear-container">
+             <svg class="w-full h-full gear-extra" viewBox="0 0 100 100" fill="none">
+                 <circle cx="50" cy="50" r="28" fill="none" stroke="rgba(59, 130, 246, 0.5)" stroke-width="2" />
+                 <circle cx="50" cy="50" r="18" fill="none" stroke="rgba(147, 197, 253, 0.3)" stroke-width="1" />
+                 <line x1="50" y1="22" x2="50" y2="32" stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" transform="rotate(0 50 50)" />
+                 <line x1="50" y1="22" x2="50" y2="32" stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" transform="rotate(60 50 50)" />
+                 <line x1="50" y1="22" x2="50" y2="32" stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" transform="rotate(120 50 50)" />
+                 <line x1="50" y1="22" x2="50" y2="32" stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" transform="rotate(180 50 50)" />
+                 <line x1="50" y1="22" x2="50" y2="32" stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" transform="rotate(240 50 50)" />
+                 <line x1="50" y1="22" x2="50" y2="32" stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" transform="rotate(300 50 50)" />
+             </svg>
+         </div>
+
+         <!-- Background Blurs -->
+         <div class="absolute top-1/4 left-1/4 w-96 h-96 blur-container"></div>
+         <div class="absolute bottom-1/4 right-1/4 w-80 h-80 blur-container"></div>
+         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 blur-container"></div>
+     </div>
+
+    <!-- Floating Particles -->
+    <div class="absolute inset-0 overflow-hidden" id="particles"></div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div class="w-full max-w-md">
+            <div id="formContainer" class="form-container backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl shadow-black/20 hover:shadow-black/30 transition-all duration-1000 hover:bg-white/15 group hover:shadow-blue-500/20 hover:border-blue-400/30 neon-hover">
+                                 <!-- Logo -->
+                 <div class="text-center mb-8 animate-fade-in">
+                     <div class="w-20 h-20 mx-auto mb-4 logo-container rounded-2xl flex items-center justify-center overflow-hidden">
+                         <img src="../icons/t7logo.png" alt="T7 Logo" class="w-full h-full object-contain">
+                     </div>
+                 </div>
+
+                <!-- Title -->
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent mb-2 group-hover:from-blue-100 group-hover:to-blue-300 transition-all duration-500">
+                        TESDA VII
+                    </h1>
+                    <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">
+                        Secure access for administrators only
+                    </p>
+                </div>
+
+                <!-- Form -->
+                <form id="loginForm" class="space-y-6">
+                    <div class="space-y-2">
+                        <label for="email" class="block text-white/90 font-medium group-hover:text-white transition-colors duration-300">
+                            Email
+                        </label>
+                        <input
+                            id="email"
+                            type="email"
+                            class="w-full px-3 py-2 bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-lg focus:bg-white/15 focus:border-blue-400/50 transition-all duration-300 hover:bg-white/12 hover:border-blue-300/40 hover:shadow-lg hover:shadow-blue-500/10 neon-hover"
+                            placeholder="Enter your email"
+                            required
+                        />
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="password" class="block text-white/90 font-medium group-hover:text-white transition-colors duration-300">
+                            Password
+                        </label>
+                        <input
+                            id="password"
+                            type="password"
+                            class="w-full px-3 py-2 bg-white/10 border border-white/20 text-white placeholder:text-white/50 rounded-lg focus:bg-white/15 focus:border-blue-400/50 transition-all duration-300 hover:bg-white/12 hover:border-blue-300/40 hover:shadow-lg hover:shadow-blue-500/10 neon-hover"
+                            placeholder="Enter your password"
+                            required
+                        />
+                    </div>
+
+                                         <div class="flex items-center justify-between text-sm">
+                         <label class="flex items-center space-x-2 text-white/70 hover:text-white transition-colors cursor-pointer">
+                             <input type="checkbox" class="rounded checkbox-custom text-blue-400" />
+                             <span>Remember me</span>
+                         </label>
+                         <a href="#" class="text-blue-300 hover:text-blue-200 transition-colors hover:underline neon-hover">
+                             Forgot password?
+                         </a>
+                     </div>
+
+                    <button
+                        type="submit"
+                        id="submitBtn"
+                        class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98] btn-hover"
+                    >
+                        <span id="btnText">Sign In</span>
+                        <div id="btnLoading" class="hidden flex items-center justify-center space-x-2">
+                            <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            <span>Signing in...</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+                 // Create floating particles
+         function createParticles() {
+             const particlesContainer = document.getElementById('particles');
+             for (let i = 0; i < 20; i++) {
+                 const particle = document.createElement('div');
+                 particle.className = 'absolute w-1 h-1 particle';
+                 particle.style.left = Math.random() * 100 + '%';
+                 particle.style.top = Math.random() * 100 + '%';
+                 particle.style.animationDelay = Math.random() * 3 + 's';
+                 particle.style.animationDuration = (2 + Math.random() * 3) + 's';
+                 particlesContainer.appendChild(particle);
+             }
+         }
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnLoading = document.getElementById('btnLoading');
+            const formContainer = document.getElementById('formContainer');
+            const transitionOverlay = document.getElementById('transitionOverlay');
+            
+            // Show loading state
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            submitBtn.classList.add('animate-pulse');
+            
+            // Start form shrinking animation
+            formContainer.classList.add('shrinking');
+            
+            // Simulate login process
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Show transition overlay
+            transitionOverlay.classList.add('active');
+            
+            // Wait for transition
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Here you would typically redirect to the dashboard
+            // window.location.href = '/dashboard';
+            
+            // Reset for demo purposes
+            setTimeout(() => {
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+                submitBtn.classList.remove('animate-pulse');
+                formContainer.classList.remove('shrinking');
+                transitionOverlay.classList.remove('active');
+            }, 2000);
+        });
+
+        // Initialize particles on page load
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>
