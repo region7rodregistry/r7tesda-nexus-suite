@@ -117,6 +117,13 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .logo-container {
+    flex-direction: row;
+    gap: 0.5rem;
   }
 
   .nav {
@@ -833,6 +840,17 @@ body {
   display: block;
 }
 
+/* Banner visibility control */
+.mobile-banner {
+  display: none;
+  order: -1; /* Move to top on mobile */
+}
+
+.desktop-banner {
+  display: flex;
+  order: 1; /* Move to bottom on desktop */
+}
+
 /* Footer */
 .footer {
   background: rgba(15, 23, 42, 0.95);
@@ -1005,8 +1023,14 @@ body {
   }
 
   /* Banner mobile optimization */
-  .banner-container {
+  .desktop-banner {
+    display: none;
+  }
+
+  .mobile-banner {
+    display: flex;
     margin: 0 0.5rem;
+    order: -1; /* Ensure it stays at the top */
   }
 
   .banner-image {
@@ -1148,6 +1172,16 @@ body {
     width: 80px;
     height: 80px;
   }
+
+  /* Banner landscape optimization */
+  .desktop-banner {
+    display: none;
+  }
+
+  .mobile-banner {
+    display: flex;
+    order: -1; /* Ensure it stays at the top */
+  }
 }
 
 </style>
@@ -1177,8 +1211,8 @@ body {
 
             <!-- Content -->
             <div class="content-wrapper">
-                <!-- Banner Image -->
-                <div class="banner-container">
+                <!-- Banner Image (Mobile) -->
+                <div class="banner-container mobile-banner">
                     <img src="icons/tesdabanner1.jpg" alt="TESDA Banner" class="banner-image" />
                 </div>
 
@@ -1263,6 +1297,11 @@ body {
                             </div>
                         </a>
                     </div>
+                </div>
+
+                <!-- Banner Image (Desktop) -->
+                <div class="banner-container desktop-banner">
+                    <img src="icons/tesdabanner1.jpg" alt="TESDA Banner" class="banner-image" />
                 </div>
             </div>
         </main>
