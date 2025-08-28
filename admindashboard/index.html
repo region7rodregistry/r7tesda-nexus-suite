@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access Terminal - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="../icons/t7ilogo.png">
     <style>
         :root {
             /* Color tokens for black, blue, white neon theme */
@@ -119,7 +120,8 @@
         }
 
         .custom-button:hover {
-            animation: pulse-neon 2s ease-in-out infinite alternate;
+            transform: scale(1.02);
+            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 30px var(--primary);
         }
 
         .custom-card {
@@ -363,7 +365,7 @@
                 <!-- Header -->
                 <div class="text-center mb-6 tv-header">
                     <div class="flex justify-center mb-2">
-                        <img src="../icons/tlogo.png" alt="TESDA Banner" class="w-16 h-16">
+                        <img src="../icons/tlogo.png" alt="TESDA Banner" class="w-20 h-20">
                     </div>
                     <h1 class="text-3xl font-bold neon-text mb-2 glitch-effect" data-text="ACCESS TERMINAL">ACCESS TERMINAL</h1>
                     <p class="text-sm" style="color: var(--muted-foreground);">Enter your credentials to continue</p>
@@ -408,13 +410,13 @@
                         <label for="remember" class="text-sm cursor-pointer select-none">Remember me</label>
                     </div>
 
-                    <!-- Submit Button -->
-                    <button
-                        type="submit"
-                        class="w-full py-3 px-4 rounded-md font-semibold custom-button neon-glow tv-button"
-                    >
-                        INITIALIZE LOGIN
-                    </button>
+                                         <!-- Submit Button -->
+                     <button
+                         type="submit"
+                         class="w-full py-3 px-4 rounded-md font-semibold custom-button tv-button"
+                     >
+                         INITIALIZE LOGIN
+                     </button>
                 </form>
 
                 <!-- Decorative neon lines -->
