@@ -16,9 +16,9 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="flex flex-col flex-1">
-      <div className="relative flex-1 flex items-center justify-center p-4 py-16">
+      <div className="relative flex flex-1 items-center justify-center p-4 py-16">
         <video
-          className="fixed inset-0 w-full h-full object-cover -z-10 opacity-60"
+          className="fixed inset-0 -z-10 h-full w-full object-cover opacity-60"
           autoPlay
           muted
           loop
@@ -26,30 +26,22 @@ export default function AdminDashboardPage() {
         >
           <source src="/icons/greenneonbg.mp4" type="video/mp4" />
         </video>
-        <div className="fixed inset-0 bg-[#080d14]/70 -z-10" />
-        <div
-          className="absolute inset-0 opacity-20 -z-10"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.04) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
+        <div className="fixed inset-0 -z-10 bg-[var(--c-overlay)] transition-colors duration-300" />
 
-        <div className="relative w-full max-w-md rounded-2xl overflow-hidden border border-cyan-500/30 bg-[#080d14]/90 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_0_80px_rgba(6,182,212,0.12)] animate-fade-in-up">
-          <div className="text-center mb-8">
-            <div className="inline-flex justify-center mb-4 transition-transform duration-500 hover:scale-105">
+        <div className="animate-fade-in-up relative w-full max-w-md overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-card transition-colors duration-300 sm:p-8">
+          <div className="mb-8 text-center">
+            <div className="mb-4 inline-flex justify-center transition-transform duration-500 hover:scale-105">
               <Image src="/icons/tlogo.png" alt="TESDA" width={72} height={72} />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-cyan-400 tracking-tight">
+            <h1 className="text-2xl font-bold tracking-tight text-accent sm:text-3xl">
               ACCESS TERMINAL
             </h1>
-            <p className="text-slate-400 text-sm mt-1.5">Enter your credentials to continue</p>
+            <p className="mt-1.5 text-sm text-ink-sec">Enter your credentials to continue</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-slate-300 mb-2">
+              <label htmlFor="username" className="mb-2 block text-sm font-medium text-ink-sec">
                 Username
               </label>
               <input
@@ -59,13 +51,11 @@ export default function AdminDashboardPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-slate-500
-                  focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-400/50
-                  transition-all duration-300 ease-out"
+                className="w-full rounded-xl border border-line bg-surface-alt px-4 py-3 text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-accent-line focus:outline-none focus:ring-2 focus:ring-accent-line"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+              <label htmlFor="password" className="mb-2 block text-sm font-medium text-ink-sec">
                 Password
               </label>
               <input
@@ -75,9 +65,7 @@ export default function AdminDashboardPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-slate-500
-                  focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-400/50
-                  transition-all duration-300 ease-out"
+                className="w-full rounded-xl border border-line bg-surface-alt px-4 py-3 text-ink placeholder:text-ink-muted transition-colors duration-300 focus:border-accent-line focus:outline-none focus:ring-2 focus:ring-accent-line"
               />
             </div>
             <div className="flex items-center gap-3">
@@ -86,33 +74,30 @@ export default function AdminDashboardPage() {
                 type="checkbox"
                 checked={remember}
                 onChange={(e) => setRemember(e.target.checked)}
-                className="w-4 h-4 rounded border-white/20 bg-white/5 text-cyan-500 focus:ring-cyan-500/40 transition-colors duration-300"
+                className="h-4 w-4 rounded border-line accent-[var(--c-accent)]"
               />
-              <label htmlFor="remember" className="text-sm text-slate-400 cursor-pointer select-none">
+              <label htmlFor="remember" className="cursor-pointer select-none text-sm text-ink-sec">
                 Remember me
               </label>
             </div>
             <button
               type="submit"
-              className="w-full py-3.5 px-4 rounded-xl font-semibold bg-cyan-500 text-slate-900
-                hover:bg-cyan-400 hover:shadow-[0_0_32px_rgba(6,182,212,0.4)]
-                active:scale-[0.99]
-                transition-all duration-400 ease-out"
+              className="w-full rounded-xl bg-accent px-4 py-3.5 font-semibold text-white shadow-[0_6px_16px_var(--c-accent-shadow)] transition-all duration-300 hover:-translate-y-0.5 active:scale-[0.99]"
             >
               INITIALIZE LOGIN
             </button>
           </form>
 
           <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="h-px w-14 bg-gradient-to-r from-transparent to-cyan-500/40 rounded" />
-            <div className="w-2 h-2 rounded-full bg-cyan-500/70" />
-            <div className="h-px w-14 bg-gradient-to-l from-transparent to-cyan-500/40 rounded" />
+            <div className="h-px w-14 rounded bg-gradient-to-r from-transparent to-accent-line" />
+            <div className="h-2 w-2 rounded-full bg-accent" />
+            <div className="h-px w-14 rounded bg-gradient-to-l from-transparent to-accent-line" />
           </div>
 
-          <p className="text-center mt-6 text-sm">
+          <p className="mt-6 text-center text-sm">
             <Link
               href="/"
-              className="text-cyan-400 hover:text-cyan-300 transition-colors duration-300"
+              className="text-accent transition-colors hover:opacity-80"
             >
               ← Back to Nexus Suite
             </Link>

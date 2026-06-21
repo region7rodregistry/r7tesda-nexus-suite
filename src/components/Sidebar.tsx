@@ -8,67 +8,133 @@ type NavItem = {
   label: string;
   href?: string;
   decoy?: boolean;
-  icon?: string;
-  section?: "workspace" | "systems";
+  icon: JSX.Element;
+  section: "workspace" | "systems";
+};
+
+const iconProps = {
+  width: 18,
+  height: 18,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.8,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
 };
 
 const navItems: NavItem[] = [
-  { label: "Staff Directory", decoy: true, icon: "👥", section: "workspace" },
-  { label: "Announcements", decoy: true, icon: "📋", section: "workspace" },
-  { label: "HR Portal", decoy: true, icon: "🏢", section: "workspace" },
-  { label: "Policies", decoy: true, icon: "📜", section: "workspace" },
-  { label: "Help Desk", decoy: true, icon: "🛟", section: "workspace" },
-  { label: "Forms", decoy: true, icon: "📝", section: "workspace" },
-  { label: "ICT Unit", href: "/ictunit", icon: "💻", section: "systems" },
-  { label: "Access Terminal", href: "/admindashboard", icon: "⛯", section: "systems" },
+  {
+    label: "Staff Directory",
+    decoy: true,
+    section: "workspace",
+    icon: (
+      <svg {...iconProps}>
+        <circle cx="9" cy="8" r="3.2" />
+        <path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 6.5a3 3 0 0 1 0 5M18 19a4.5 4.5 0 0 0-3-4.2" />
+      </svg>
+    ),
+  },
+  {
+    label: "Announcements",
+    decoy: true,
+    section: "workspace",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M3 11v3l11 5V6L3 11zM14 9l5-2v10l-5-2" />
+      </svg>
+    ),
+  },
+  {
+    label: "HR Portal",
+    decoy: true,
+    section: "workspace",
+    icon: (
+      <svg {...iconProps}>
+        <rect x="3" y="7" width="18" height="13" rx="2" />
+        <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      </svg>
+    ),
+  },
+  {
+    label: "Policies",
+    decoy: true,
+    section: "workspace",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+        <path d="M14 3v5h5M8 13h8M8 17h6" />
+      </svg>
+    ),
+  },
+  {
+    label: "Help Desk",
+    decoy: true,
+    section: "workspace",
+    icon: (
+      <svg {...iconProps}>
+        <path d="M4 13a8 8 0 0 1 16 0M4 13v3a2 2 0 0 0 2 2h1v-5H6a2 2 0 0 0-2 0zM20 13v3a2 2 0 0 1-2 2h-1v-5h1a2 2 0 0 1 2 0z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Forms",
+    decoy: true,
+    section: "workspace",
+    icon: (
+      <svg {...iconProps}>
+        <rect x="4" y="3" width="16" height="18" rx="2" />
+        <path d="M8 8h8M8 12h8M8 16h5" />
+      </svg>
+    ),
+  },
+  {
+    label: "ICT Unit",
+    href: "/ictunit",
+    section: "systems",
+    icon: (
+      <svg {...iconProps}>
+        <rect x="3" y="4" width="18" height="12" rx="2" />
+        <path d="M8 20h8M12 16v4" />
+      </svg>
+    ),
+  },
+  {
+    label: "Access Terminal",
+    href: "/admindashboard",
+    section: "systems",
+    icon: (
+      <svg {...iconProps}>
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" />
+      </svg>
+    ),
+  },
 ];
 
-function NavButton({
-  item,
-  collapsed,
-  isActive,
-}: {
-  item: NavItem;
-  collapsed: boolean;
-  isActive: boolean;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
+const baseRow =
+  "flex items-center gap-3 rounded-[10px] px-[13px] py-[11px] text-sm transition-colors duration-200";
+
+function NavRow({ item, isActive }: { item: NavItem; isActive: boolean }) {
+  const [hovered, setHovered] = useState(false);
 
   if (item.decoy) {
     return (
       <button
         type="button"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onFocus={() => setIsHovered(true)}
-        onBlur={() => setIsHovered(false)}
-        className="relative w-full group nav-btn"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
         aria-label={`${item.label} (Coming soon)`}
+        className={`${baseRow} w-full border border-transparent font-medium text-ink-sec hover:bg-surface-alt`}
       >
-        <span
-          className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg border backdrop-blur-xl min-h-[40px] w-full text-left text-xs sm:text-sm transition-all duration-300 ease-smooth ${
-            isHovered
-              ? "border-amber-400/60 bg-amber-500/20 text-amber-100"
-              : "border-white/5 bg-white/[0.03] text-slate-200 hover:border-blue-400/50 hover:bg-blue-500/10"
-          }`}
-        >
-          <span className="text-lg">{item.icon}</span>
-          <span
-            className={`font-medium flex-1 whitespace-nowrap transition-all duration-300 ease-smooth ${
-              collapsed
-                ? "opacity-0 -translate-x-2 max-w-0"
-                : "opacity-100 translate-x-0 max-w-xs"
-            }`}
-          >
-            {isHovered ? "Coming Soon" : item.label}
-          </span>
-        </span>
-        {isHovered && !collapsed && (
-          <span
-            className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/95 text-slate-900 whitespace-nowrap shadow-lg z-50 pointer-events-none"
-            style={{ boxShadow: "0 4px 20px rgba(245,158,11,0.4)" }}
-          >
-            Coming Soon
+        <span className="flex-none text-ink-muted">{item.icon}</span>
+        <span className="flex-1 text-left">{item.label}</span>
+        {hovered && (
+          <span className="rounded-md bg-surface-alt px-2 py-0.5 font-mono text-[9px] font-semibold tracking-[0.6px] text-ink-muted">
+            SOON
           </span>
         )}
       </button>
@@ -76,133 +142,57 @@ function NavButton({
   }
 
   return (
-    <div
-      className="relative w-full"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsHovered(true)}
-      onBlur={() => setIsHovered(false)}
+    <Link
+      href={item.href!}
+      aria-current={isActive ? "page" : undefined}
+      className={`${baseRow} ${
+        isActive
+          ? "border border-accent-line bg-accent-soft font-semibold text-accent"
+          : "border border-transparent font-medium text-ink-sec hover:bg-surface-alt"
+      }`}
     >
-      <Link
-        href={item.href!}
-        aria-label={item.label}
-        aria-current={isActive ? "page" : undefined}
-        className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-lg border min-h-[40px] w-full text-left text-xs sm:text-sm backdrop-blur-xl transition-all duration-300 ease-smooth ${
-          isActive
-            ? "border-blue-500/70 bg-blue-500/15 text-slate-50 shadow-[0_0_0_1px_rgba(59,130,246,0.5)]"
-            : "border-white/5 bg-white/[0.03] text-slate-200 hover:border-blue-400/60 hover:bg-blue-500/12 hover:text-white hover:shadow-[0_16px_40px_rgba(15,23,42,0.8)]"
-        } ${
-          isActive
-            ? "relative before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[3px] before:rounded-full before:bg-gradient-to-b before:from-blue-400 before:to-teal-400"
-            : ""
-        }`}
-      >
-        <span className="text-lg">{item.icon}</span>
-        <span
-          className={`font-medium whitespace-nowrap transition-all duration-300 ease-smooth ${
-            collapsed
-              ? "opacity-0 -translate-x-2 max-w-0"
-              : "opacity-100 translate-x-0 max-w-xs"
-          }`}
-        >
-          {item.label}
-        </span>
-      </Link>
-      {collapsed && isHovered && (
-        <span
-          className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-900/95 text-slate-50 whitespace-nowrap shadow-lg z-50 pointer-events-none border border-blue-500/50"
-          style={{ boxShadow: "0 4px 24px rgba(37,99,235,0.55)" }}
-        >
-          {item.label}
-        </span>
-      )}
+      <span className={`flex-none ${isActive ? "text-accent" : "text-ink-muted"}`}>
+        {item.icon}
+      </span>
+      <span className="flex-1">{item.label}</span>
+    </Link>
+  );
+}
+
+function SectionLabel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div
+      className={`px-2 font-mono text-[10.5px] font-medium tracking-[1.6px] text-ink-muted ${className}`}
+    >
+      {children}
     </div>
   );
 }
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
 
-  const workspaceItems = navItems.filter((item) => item.section === "workspace");
-  const systemItems = navItems.filter((item) => item.section === "systems");
+  const workspaceItems = navItems.filter((i) => i.section === "workspace");
+  const systemItems = navItems.filter((i) => i.section === "systems");
 
   return (
-    <aside
-      className={`fixed left-0 top-16 bottom-0 z-40 hidden lg:flex flex-col border-r border-white/5 bg-[#060914]/95 backdrop-blur-2xl shadow-[0_18px_60px_rgba(15,23,42,0.85)] transition-all duration-300 ease-smooth ${
-        collapsed ? "w-20" : "w-64"
-      }`}
-    >
-      {/* Collapse toggle */}
-      <button
-        type="button"
-        onClick={() => setCollapsed((prev) => !prev)}
-        className="absolute -right-3 top-16 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-700/70 bg-slate-900 text-slate-200 shadow-[0_8px_20px_rgba(15,23,42,0.8)] hover:border-blue-400/70 hover:bg-blue-500/20 transition duration-200"
-        aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
-      >
-        <svg
-          viewBox="0 0 20 20"
-          className="h-3.5 w-3.5"
-          aria-hidden="true"
-        >
-          <path
-            d={collapsed ? "M12.5 5L8 9.5L12.5 14" : "M7.5 5L12 9.5L7.5 14"}
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+    <aside className="fixed left-0 top-[68px] bottom-0 z-40 hidden w-[264px] flex-col overflow-y-auto border-r border-line bg-surface px-4 py-[22px] transition-colors duration-300 lg:flex">
+      <SectionLabel className="mb-3 mt-1">WORKSPACE</SectionLabel>
+      <nav className="flex flex-col gap-1">
+        {workspaceItems.map((item) => (
+          <NavRow key={item.label} item={item} isActive={false} />
+        ))}
+      </nav>
+
+      <SectionLabel className="mb-3 mt-7">CORE SYSTEMS</SectionLabel>
+      <nav className="flex flex-col gap-1">
+        {systemItems.map((item) => (
+          <NavRow
+            key={item.label}
+            item={item}
+            isActive={item.href ? pathname === item.href : false}
           />
-        </svg>
-      </button>
-
-      <nav className="flex flex-1 flex-col gap-4 px-3 py-4 overflow-y-auto">
-        {/* Workspace group */}
-        <div>
-          {!collapsed && (
-            <div className="mb-2 px-1">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Workspace
-              </p>
-            </div>
-          )}
-          <div className="flex flex-col gap-1.5">
-            {workspaceItems.map((item) => (
-              <NavButton
-                key={item.label}
-                item={item}
-                collapsed={collapsed}
-                isActive={false}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="mx-1 my-1 h-px bg-gradient-to-r from-transparent via-slate-700/70 to-transparent" />
-
-        {/* Systems group */}
-        <div>
-          {!collapsed && (
-            <div className="mb-2 px-1">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Core Systems
-              </p>
-            </div>
-          )}
-          <div className="flex flex-col gap-1.5">
-            {systemItems.map((item) => {
-              const isActive = item.href ? pathname === item.href : false;
-              return (
-                <NavButton
-                  key={item.label}
-                  item={item}
-                  collapsed={collapsed}
-                  isActive={isActive}
-                />
-              );
-            })}
-          </div>
-        </div>
+        ))}
       </nav>
     </aside>
   );

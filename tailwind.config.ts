@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -16,9 +17,37 @@ const config: Config = {
           navy: "#0f172a",
           slate: "#1e293b",
         },
+        // Semantic theme tokens (driven by CSS variables in globals.css,
+        // switched by the `.dark` class on <html>).
+        page: "var(--c-page-bg)",
+        surface: {
+          DEFAULT: "var(--c-surface)",
+          alt: "var(--c-surface-alt)",
+        },
+        line: "var(--c-border)",
+        ink: {
+          DEFAULT: "var(--c-text)",
+          sec: "var(--c-text-sec)",
+          muted: "var(--c-text-muted)",
+        },
+        accent: {
+          DEFAULT: "var(--c-accent)",
+          soft: "var(--c-active-bg)",
+          line: "var(--c-active-border)",
+        },
+        positive: {
+          DEFAULT: "var(--c-green)",
+          soft: "var(--c-green-bg)",
+          line: "var(--c-green-border)",
+        },
+        warn: "var(--c-amber)",
+      },
+      boxShadow: {
+        card: "var(--c-shadow)",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans: ["var(--font-public-sans)", "Public Sans", "system-ui", "sans-serif"],
+        mono: ["var(--font-ibm-plex-mono)", "IBM Plex Mono", "monospace"],
       },
       transitionTimingFunction: {
         smooth: "cubic-bezier(0.22, 1, 0.36, 1)",

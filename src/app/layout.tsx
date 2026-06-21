@@ -1,12 +1,22 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const publicSans = Public_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
+  variable: "--font-public-sans",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  variable: "--font-ibm-plex-mono",
 });
 
 export const metadata: Metadata = {
@@ -21,21 +31,35 @@ export const viewport = {
   maximumScale: 5,
 };
 
+// Applied before React hydrates so the saved theme paints on the first frame
+// (no flash of the wrong theme).
+const themeBootScript = `
+(function () {
+  try {
+    var t = localStorage.getItem('nexus-theme');
+    if (t === 'dark') document.documentElement.classList.add('dark');
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body
-        className={`${plusJakarta.className} min-h-screen flex flex-col bg-[#0A0F1E] text-white antialiased`}
+        className={`${publicSans.variable} ${ibmPlexMono.variable} font-sans min-h-screen flex flex-col bg-page text-ink antialiased`}
       >
-        <Header />
-        <Sidebar />
-        <main className="flex-1 lg:ml-64">
-          {children}
-        </main>
+        <ThemeProvider>
+          <Header />
+          <Sidebar />
+          <main className="flex-1 lg:ml-[264px]">{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
